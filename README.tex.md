@@ -1,11 +1,19 @@
 # RSA 加密
 本篇作為課程作業的筆記，著重在 RSA 加解密的實作流程與加速方法，不涉及其數學證明與推導。
+
+## 程式執行
+```bash
+git clone https://github.com/Petingo/RSA
+cd RSA/code
+python3 test.py
+```
+
 ## 公鑰、私鑰的產生：
-1. 生成兩質數 $p$ 和 $q$，$p$ 不等於 $q$
+1. 隨機生成兩質數 $p$ 和 $q$，$p$ 不等於 $q$
 2. 計算 $N=p \times q$
 3. 由歐拉函數可知，不大 $N$ 且與 $N$ 互質的整數個數為 $(p-1)\times(q-1)$；為方便表達，令 $\varphi = (p-1)\times(q-1)$
 4. 隨機挑選一個 $e$ 與 $\varphi$ 互質且小於 $\varphi$
-5. 計算 $e$ 對同於 $\varphi$ 的乘法反元素 $d$；意即 $d \times e\equiv1\pmod{\varphi}$ 
+5. 計算 $e$ 對同餘 $\varphi$ 的乘法反元素 $d$；意即 $d \times e\equiv1\pmod{\varphi}$ 
 6. 得出公鑰 $(N,e)$ 、私鑰 $(N,d)$
 
 ## 加密
