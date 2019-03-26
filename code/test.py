@@ -1,7 +1,7 @@
 import RSA
 
 plaintext = input("Please input plaintext: ")
-key_bits = input("key bits: ")
+key_bits = input("p & q bits: ")
 
 print("generating keys...")
 private_key, public_key, p, q = RSA.gen_key(int(key_bits))
