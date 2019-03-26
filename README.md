@@ -1,11 +1,19 @@
 # RSA 加密
 本篇作為課程作業的筆記，著重在 RSA 加解密的實作流程與加速方法，不涉及其數學證明與推導。
+
+## 程式執行
+```bash
+git clone https://github.com/Petingo/RSA
+cd RSA/code
+python3 test.py
+```
+
 ## 公鑰、私鑰的產生：
-1. 生成兩質數 <img src="/tex/2ec6e630f199f589a2402fdf3e0289d5.svg?invert_in_darkmode&sanitize=true" align=middle width=8.270567249999992pt height=14.15524440000002pt/> 和 <img src="/tex/d5c18a8ca1894fd3a7d25f242cbe8890.svg?invert_in_darkmode&sanitize=true" align=middle width=7.928106449999989pt height=14.15524440000002pt/>，<img src="/tex/2ec6e630f199f589a2402fdf3e0289d5.svg?invert_in_darkmode&sanitize=true" align=middle width=8.270567249999992pt height=14.15524440000002pt/> 不等於 <img src="/tex/d5c18a8ca1894fd3a7d25f242cbe8890.svg?invert_in_darkmode&sanitize=true" align=middle width=7.928106449999989pt height=14.15524440000002pt/>
+1. 隨機生成兩質數 <img src="/tex/2ec6e630f199f589a2402fdf3e0289d5.svg?invert_in_darkmode&sanitize=true" align=middle width=8.270567249999992pt height=14.15524440000002pt/> 和 <img src="/tex/d5c18a8ca1894fd3a7d25f242cbe8890.svg?invert_in_darkmode&sanitize=true" align=middle width=7.928106449999989pt height=14.15524440000002pt/>，<img src="/tex/2ec6e630f199f589a2402fdf3e0289d5.svg?invert_in_darkmode&sanitize=true" align=middle width=8.270567249999992pt height=14.15524440000002pt/> 不等於 <img src="/tex/d5c18a8ca1894fd3a7d25f242cbe8890.svg?invert_in_darkmode&sanitize=true" align=middle width=7.928106449999989pt height=14.15524440000002pt/>
 2. 計算 <img src="/tex/99807742b664b5795db8e44c216a5ee0.svg?invert_in_darkmode&sanitize=true" align=middle width=73.20746399999999pt height=22.465723500000017pt/>
 3. 由歐拉函數可知，不大 <img src="/tex/f9c4988898e7f532b9f826a75014ed3c.svg?invert_in_darkmode&sanitize=true" align=middle width=14.99998994999999pt height=22.465723500000017pt/> 且與 <img src="/tex/f9c4988898e7f532b9f826a75014ed3c.svg?invert_in_darkmode&sanitize=true" align=middle width=14.99998994999999pt height=22.465723500000017pt/> 互質的整數個數為 <img src="/tex/63eb3ef6157e2497f42fa6c85b8f9e3c.svg?invert_in_darkmode&sanitize=true" align=middle width=118.4815137pt height=24.65753399999998pt/>；為方便表達，令 <img src="/tex/b92139a2a66c1726dda3e1761f6e8e3c.svg?invert_in_darkmode&sanitize=true" align=middle width=151.1525763pt height=24.65753399999998pt/>
 4. 隨機挑選一個 <img src="/tex/8cd34385ed61aca950a6b06d09fb50ac.svg?invert_in_darkmode&sanitize=true" align=middle width=7.654137149999991pt height=14.15524440000002pt/> 與 <img src="/tex/417a5301693b60807fa658e5ef9f9535.svg?invert_in_darkmode&sanitize=true" align=middle width=10.75343279999999pt height=14.15524440000002pt/> 互質且小於 <img src="/tex/417a5301693b60807fa658e5ef9f9535.svg?invert_in_darkmode&sanitize=true" align=middle width=10.75343279999999pt height=14.15524440000002pt/>
-5. 計算 <img src="/tex/8cd34385ed61aca950a6b06d09fb50ac.svg?invert_in_darkmode&sanitize=true" align=middle width=7.654137149999991pt height=14.15524440000002pt/> 對同於 <img src="/tex/417a5301693b60807fa658e5ef9f9535.svg?invert_in_darkmode&sanitize=true" align=middle width=10.75343279999999pt height=14.15524440000002pt/> 的乘法反元素 <img src="/tex/2103f85b8b1477f430fc407cad462224.svg?invert_in_darkmode&sanitize=true" align=middle width=8.55596444999999pt height=22.831056599999986pt/>；意即 <img src="/tex/c26a2937d950ea3f50dc38156db13fa2.svg?invert_in_darkmode&sanitize=true" align=middle width=134.2690338pt height=24.65753399999998pt/> 
+5. 計算 <img src="/tex/8cd34385ed61aca950a6b06d09fb50ac.svg?invert_in_darkmode&sanitize=true" align=middle width=7.654137149999991pt height=14.15524440000002pt/> 對同餘 <img src="/tex/417a5301693b60807fa658e5ef9f9535.svg?invert_in_darkmode&sanitize=true" align=middle width=10.75343279999999pt height=14.15524440000002pt/> 的乘法反元素 <img src="/tex/2103f85b8b1477f430fc407cad462224.svg?invert_in_darkmode&sanitize=true" align=middle width=8.55596444999999pt height=22.831056599999986pt/>；意即 <img src="/tex/c26a2937d950ea3f50dc38156db13fa2.svg?invert_in_darkmode&sanitize=true" align=middle width=134.2690338pt height=24.65753399999998pt/> 
 6. 得出公鑰 <img src="/tex/096daeeb51a014ef0b65694396cb8eff.svg?invert_in_darkmode&sanitize=true" align=middle width=41.83217774999999pt height=24.65753399999998pt/> 、私鑰 <img src="/tex/68c7e361f7dd1bff493ce75c7a902677.svg?invert_in_darkmode&sanitize=true" align=middle width=42.73400339999999pt height=24.65753399999998pt/>
 
 ## 加密
